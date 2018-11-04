@@ -1,0 +1,106 @@
+{
+	title: {
+		text: '',
+		x: 'left',
+		textStyle: {
+			fontFamily: 'SimHei',
+			fontSize: 16,
+		}
+
+	},
+	tooltip: {
+		trigger: 'axis'
+	},
+	grid: {
+		x: 80,
+		y: 80,
+		x2: 80,
+		y2: 80,
+	},
+	xAxis: {
+		name: '',
+		axisLine: {
+			lineStyle: {
+				color: "black",
+			}
+		},
+		axisTick: {
+			lineStyle: {
+				color: "black",
+
+			}
+		},
+		axisLabel: {
+			color: 'black',
+			interval: 0,
+			rotate: -45,
+			textStyle: {
+				fontFamily: 'Microsoft Yahei',
+				fontSize: 16,
+				align: 'left',
+			},
+			margin: 5
+		},
+		nameTextStyle: {
+			color: "black",
+			fontSize: 16,
+			fontFamily: 'SimHei',
+		},
+
+		data: ["情境选择", "情境修正", "注意分配", "认知改变", "反应调节"]
+	},
+	yAxis: [{
+		name: 'T分数',
+		nameTextStyle: {
+			color: "black",
+			fontSize: 16,
+			fontFamily: 'SimHei',
+		},
+		max: 120,
+		min: 20,
+		splitNumber: 10,
+		splitLine: {
+			show: false,
+		},
+
+		axisLine: {
+			lineStyle: {
+				color: "black",
+
+			}
+		},
+
+		axisTick: {
+			lineStyle: {
+				color: "black"
+			}
+		},
+
+		axisLabel: {
+			color: 'black',
+			textStyle: {
+				fontFamily: 'SimHei',
+				fontSize: 16,
+			},
+		},
+
+	}],
+	series: [{
+		name: 'T分数',
+		type: 'line',
+		symbol: 'diamond',
+		symbolSize: 8,
+		lineStyle: {
+			type: 'solid',
+			width: 1
+		},
+		itemStyle: {
+			normal: {
+				color: 'black'
+			}
+		},
+		data: [],
+	},
+
+	]
+}

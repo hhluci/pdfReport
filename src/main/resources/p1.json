@@ -1,0 +1,129 @@
+{
+	title: {
+		text: '',
+		x: 'left',
+		textStyle: {
+			fontFamily: 'SimHei',
+			fontSize: 16,
+		}
+
+	},
+	tooltip: {
+		trigger: 'axis'
+	},
+	legend: {
+		data: ['T分数']
+	},
+	grid: {
+		x: 80,
+		y: 80,
+		x2: 80,
+		y2: 80,
+	},
+	xAxis: [{
+
+		axisLabel: {
+			interval: 0,
+			rotate: -45,
+			textStyle: {
+				fontFamily: 'Microsoft Yahei',
+				fontSize: 12,
+				align: 'left',
+			},
+			margin: 5
+		},
+
+		type: 'category',
+		data: ['焦虑', '抑郁', '躯体化', '无控制感', '失败感', '不寻常行为', {
+			value: '情绪问题',
+			textStyle: {
+				fontSize: 14,
+				fontWeight: 700,
+				fontStyle: 'italic'
+
+			}
+		},
+		'社会压力', '交往退缩', '欺负', {
+			value: '人际问题',
+			textStyle: {
+				fontSize: 14,
+				fontWeight: 700,
+				fontStyle: 'italic'
+			}
+		},
+		'注意力不集中', '狂躁', {
+			value: '注意力问题',
+			textStyle: {
+				fontSize: 14,
+				fontWeight: 700,
+				fontStyle: 'italic'
+			}
+		},
+		'网络成瘾', '手机成瘾', {
+			value: '成瘾问题',
+			textStyle: {
+				fontSize: 14,
+				fontWeight: 700,
+				fontStyle: 'italic'
+			}
+		},
+		'讨厌学校', '讨厌老师', '讨厌学习', '考试焦虑', {
+			value: '厌学问题',
+			textStyle: {
+				fontSize: 14,
+				fontWeight: 700,
+				fontStyle: 'italic'
+			}
+		},
+		]
+	}],
+	yAxis: [{
+		name: 'T分数',
+		nameTextStyle: {
+			color: "black",
+			fontSize: 12,
+			fontFamily: 'SimHei',
+		},
+		max: 120,
+		min: 20,
+		splitNumber: 10,
+		splitLine: {
+			show: false,
+		},
+		axisLine: {
+			lineStyle: {
+				color: "black",
+			}
+		},
+		axisTick: {
+			lineStyle: {
+				color: "black"
+			}
+		},
+		axisLabel: {
+			color: 'black',
+			textStyle: {
+				fontFamily: 'SimHei',
+				fontSize: 12,
+			},
+		},
+	}],
+	series: [{
+		name: 'T分数',
+		type: 'line',
+		symbol: 'diamond',
+		symbolSize: 8,
+		lineStyle: {
+			type: 'solid',
+			width: 1
+		},
+		itemStyle: {
+			normal: {
+				color: 'black'
+			}
+		},
+		data: [],
+	},
+
+	]
+}
