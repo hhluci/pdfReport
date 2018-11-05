@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.forms.fields.PdfTextFormField;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.color.Color;
@@ -37,7 +38,10 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.AreaBreakType;
 import com.itextpdf.layout.property.TextAlignment;
 
+
 import nuc.bsd.report.IReport;
+import nuc.bsd.report.domain.ClsProBlmRep;
+import nuc.bsd.report.domain.ClsPsyRep;
 import nuc.bsd.report.domain.ProblemBehavRep;
 import nuc.bsd.report.domain.PsyQualityRep;
 import nuc.bsd.util.EChartsUtil;
@@ -48,6 +52,10 @@ public class PdfReport implements IReport{
 	private  String psyQualityReportTemplate = "psy_template.pdf";
 	private String problemBehaviorReport = "pbReport.pdf";
 	private String psyQualityReport = "psyReport.pdf";
+	private  String clsProblemBehaviorReportTemplate = "cls_pb_template.pdf";
+	private  String clsPsyQualityReportTemplate = "cls_psy_template.pdf";
+	private String clsProblemBehaviorReport = "cls_pbReport.pdf";
+	private String clsPsyQualityReport = "cls_psyReport.pdf";
 	private String pdfFontFile = "/DENG.ttf";
 	private String ROOT_PATH = "c:\\out\\";
 	private String OUT_DIR = null;
@@ -460,5 +468,174 @@ public class PdfReport implements IReport{
 		}
 		}
 	
+	}
+    private void generateClsPbCharts(ClsProBlmRep obj)throws IOException {
+    	
+    }
+    
+	public String createClsProBlmReport(ClsProBlmRep obj, String outDir) {
+		 OUT_DIR = ROOT_PATH + outDir +"\\";
+		   File file = new File(OUT_DIR);
+		    if(!file.exists()) {
+		    	file.mkdir();
+		    }else {
+		    	file.delete();
+		    	file.mkdir();
+		    }
+			try {
+				logger.debug("正在准备所需的图表");
+				generateClsPbCharts(obj);
+				logger.debug("图表准备完毕");
+				PdfDocument pdfDoc = new PdfDocument(new PdfReader(ROOT_PATH+clsProblemBehaviorReportTemplate), new PdfWriter(OUT_DIR+clsProblemBehaviorReport));
+				InputStream inputStream = PdfReport.class.getResource(pdfFontFile).openStream();
+				PdfFont pdfFont = PdfFontFactory.createFont(IOUtils.toByteArray(inputStream), PdfEncodings.IDENTITY_H, false);//PdfFontFactory.createFont("Arial", "UniGB-UCS2-H",true);//PdfFontFactory.createFont(IOUtils.toByteArray(inputStream), PdfEncodings.IDENTITY_H, false);
+				//填充form
+				logger.debug("开始填充模板表单");
+				PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
+				Map<String, PdfFormField> fields = form.getFormFields();
+			//	Set<String> keys = fields.keySet();
+				PdfFormField field;
+				for(int i=0; i<78; i++) {
+					logger.debug("正在填充第"+i+"表单域");
+					field = fields.get("r"+i);
+					PdfTextFormField txtField = (PdfTextFormField)field;
+				  
+					
+				
+					/*txtField.setMaxLen(20);*/
+					txtField.setFont(pdfFont);
+					
+					Method method = obj.getClass().getMethod("getR"+i);
+				
+					String value = (String) method.invoke(obj);
+					if(i<16) {
+						txtField.setMultiline(false);
+						
+				
+					}else {
+						txtField.setJustification(PdfFormField.ALIGN_LEFT);
+						txtField.setMultiline(true);
+					}
+				
+					txtField.setValue(value!=null?value:"");
+			
+					
+				}
+				
+				logger.debug("结束填充模板表单");
+				
+				//依次处理每一页的报告
+				
+				logger.debug("正在插入图表");
+				
+				
+			
+				pdfDoc.close();
+				
+			} catch (FileNotFoundException e) {
+				logger.error("未发现模板或字体文件"+e.getMessage());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				logger.error("模板或字体文件读写错误"+e.getMessage());
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				logger.error("调用的方法不存在"+e.getMessage());
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				logger.error("调用的方法异常"+e.getMessage());
+				
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				logger.error("非法访问"+e.getMessage());
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				logger.error("不合法参数"+e.getMessage());
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				logger.error("调用异常"+e.getMessage());
+			}
+		
+
+		return OUT_DIR+"/"+clsProblemBehaviorReport;
+	}
+	private void generateClsPsyCharts(ClsPsyRep obj)throws IOException {
+    	
+    }
+	public String createClsPsyQualityReport(ClsPsyRep obj, String outDir) {
+		// TODO Auto-generated method stub
+		OUT_DIR = ROOT_PATH + outDir +"\\";
+		   File file = new File(OUT_DIR);
+		    if(!file.exists()) {
+		    	file.mkdir();
+		    }else {
+		    	file.delete();
+		    	file.mkdir();
+		    }
+			try {
+				logger.debug("正在准备所需的图表");
+				generateClsPsyCharts(obj);
+				logger.debug("图表准备完毕");
+				PdfDocument pdfDoc = new PdfDocument(new PdfReader(ROOT_PATH+clsPsyQualityReportTemplate), new PdfWriter(OUT_DIR+clsPsyQualityReport));
+				InputStream inputStream = PdfReport.class.getResource(pdfFontFile).openStream();
+				PdfFont pdfFont = PdfFontFactory.createFont(IOUtils.toByteArray(inputStream), PdfEncodings.IDENTITY_H, false);//PdfFontFactory.createFont("Arial", "UniGB-UCS2-H",true);//PdfFontFactory.createFont(IOUtils.toByteArray(inputStream), PdfEncodings.IDENTITY_H, false);
+				//填充form
+				logger.debug("开始填充模板表单");
+				PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
+				Map<String, PdfFormField> fields = form.getFormFields();
+			//	Set<String> keys = fields.keySet();
+				PdfFormField field;
+				for(int i=0; i<59; i++) {
+					logger.debug("正在填充第"+i+"表单域");
+					field = fields.get("r"+i);
+					PdfTextFormField txtField = (PdfTextFormField)field;
+				
+					
+				
+					/*txtField.setMaxLen(20);*/
+					txtField.setFont(pdfFont);
+					
+					Method method = obj.getClass().getMethod("getR"+i);
+					if(i==16 || i==18 || i==53 || i == 56 || i==58 || i==55) {
+						continue;
+					}
+					String value = (String) method.invoke(obj);
+					
+				}
+				
+				logger.debug("结束填充模板表单");
+				
+				//依次处理每一页的报告
+				
+				logger.debug("正在插入图表");
+				
+				
+			
+				pdfDoc.close();
+				
+			} catch (FileNotFoundException e) {
+				logger.error("未发现模板或字体文件"+e.getMessage());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				logger.error("模板或字体文件读写错误"+e.getMessage());
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				logger.error("调用的方法不存在"+e.getMessage());
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				logger.error("调用的方法异常"+e.getMessage());
+				
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				logger.error("非法访问"+e.getMessage());
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				logger.error("不合法参数"+e.getMessage());
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				logger.error("调用异常"+e.getMessage());
+			}
+		
+
+		return OUT_DIR+"/"+clsPsyQualityReport;
 	}
 }
