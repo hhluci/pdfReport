@@ -4,6 +4,7 @@ public class ClsProBlmRep {
 	private String id;
 	private String schoolId;
   	private String gradeId;
+  	private String gradeName;
   	private String classId;
   	private String className;
   	private String testStuNum;
@@ -176,6 +177,12 @@ public class ClsProBlmRep {
 	
 	
 	
+	public String getGradeName() {
+		return gradeName;
+	}
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}
 	public String getClassName() {
 		return className;
 	}
